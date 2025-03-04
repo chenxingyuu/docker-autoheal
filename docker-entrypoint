@@ -99,12 +99,15 @@ notify_post_restart_script() {
   fi
 }
 
-# https://towardsdatascience.com/proper-ways-to-pass-environment-variables-in-json-for-curl-post-f797d2698bf3
+# 生成飞书消息的 JSON 负载
 generate_webhook_payload() {
   local text="$@"
   cat <<EOF
 {
-  "$WEBHOOK_JSON_KEY":"$text"
+  "msg_type": "text",
+  "content": {
+    "text": "$text"
+  }
 }
 EOF
 }
