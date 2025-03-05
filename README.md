@@ -12,6 +12,10 @@ This container is a stand-in till there is native support for `--exit-on-unhealt
 
 ![](https://img.shields.io/docker/pulls/willfarrell/autoheal "Total docker pulls") [![](https://images.microbadger.com/badges/image/willfarrell/autoheal.svg)](http://microbadger.com/images/willfarrell/autoheal "Docker layer breakdown")
 
+## Changelog
+
+- 2025-03-04 - 添加 watch.sh 脚本，监控容器启停状态，发送飞书消息通知
+
 ## How to use
 
 ### 1. Docker CLI
@@ -100,16 +104,19 @@ services:
 | --- | --- |
 
 ## Environment Defaults
-|Variable                              |Description|
-| --- | --- |
-|`AUTOHEAL_CONTAINER_LABEL=autoheal`   |set to existing label name that has the value `true`|
-|`AUTOHEAL_INTERVAL=5`                 |check every 5 seconds|
-|`AUTOHEAL_START_PERIOD=0`             |wait 0 seconds before first health check|
-|`AUTOHEAL_DEFAULT_STOP_TIMEOUT=10`    |Docker waits max 10 seconds (the Docker default) for a container to stop before killing during restarts (container overridable via label, see below)|
-|`AUTOHEAL_ONLY_MONITOR_RUNNING=false` |All containers monitored by default. Set this to true to only monitor running containers. This will result in Paused contaners being ignored.|
-|`DOCKER_SOCK=/var/run/docker.sock`    |Unix socket for curl requests to Docker API|
-|`CURL_TIMEOUT=30`                     |--max-time seconds for curl requests to Docker API|
-|`WEBHOOK_URL=""`                      |post message to the webhook if a container was restarted (or restart failed)|
+| Variable                              | Description                                                                                                                                          |
+|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `AUTOHEAL_CONTAINER_LABEL=autoheal`   | set to existing label name that has the value `true`                                                                                                 |
+| `AUTOHEAL_INTERVAL=5`                 | check every 5 seconds                                                                                                                                |
+| `AUTOHEAL_START_PERIOD=0`             | wait 0 seconds before first health check                                                                                                             |
+| `AUTOHEAL_DEFAULT_STOP_TIMEOUT=10`    | Docker waits max 10 seconds (the Docker default) for a container to stop before killing during restarts (container overridable via label, see below) |
+| `AUTOHEAL_ONLY_MONITOR_RUNNING=false` | All containers monitored by default. Set this to true to only monitor running containers. This will result in Paused contaners being ignored.        |
+| `DOCKER_SOCK=/var/run/docker.sock`    | Unix socket for curl requests to Docker API                                                                                                          |
+| `CURL_TIMEOUT=30`                     | --max-time seconds for curl requests to Docker API                                                                                                   |
+| `WEBHOOK_URL=""`                      | post message to the webhook if a container was restarted (or restart failed)                                                                         |
+| `FEISHU_WEBHOOK=""`                   | post message to feishu in watch.sh, while a container was start or die                                                                               |
+| `DEVICE_IP=""`                        | The IP address of the device, used for logging or notifications.                                                                                                                                                     |
+| `DEVICE_NAME=""`                      | The name of the device, used for logging or notifications.                                                                                                                                                     |
 
 ## Testing (building locally)
 ```bash
