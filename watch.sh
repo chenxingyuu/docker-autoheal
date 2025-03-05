@@ -1,8 +1,18 @@
 #!/bin/bash
 
-DEVICE_IP=$(ip addr show | grep inet | grep -v inet6 | awk '{print $2}' | cut -d/ -f1 | grep -v '127.0.0.1' | head -n 1)
+DEVICE_IP=${DEVICE_IP:-$(ip addr show | grep inet | grep -v inet6 | awk '{print $2}' | cut -d/ -f1 | grep -v '127.0.0.1' | head -n 1)}
 DEVICE_IP=${DEVICE_IP:-"未知"}
 echo "当前设备IP: $DEVICE_IP"
+
+DEVICE_NAME=${DEVICE_NAME:-"未知"}
+echo "当前设备名称: $DEVICE_NAME"
+
+if [[ -n "$DEVICE_NAME" ]]; then
+    SERVER_NAME="$DEVICE_IP【$DEVICE_NAME】"
+else
+    SERVER_NAME="$DEVICE_IP"
+fi
+echo "当前服务器名称: $SERVER_NAME"
 
 # 你的飞书 Webhook URL
 FEISHU_WEBHOOK=${FEISHU_WEBHOOK:-""}
@@ -43,7 +53,7 @@ do
             "zh_cn": [
                 {
                     "tag": "markdown",
-                    "content": "'"**服务器**: $DEVICE_IP"'",
+                    "content": "'"**服务器**: $SERVER_NAME"'",
                     "text_align": "left",
                     "text_size": "normal",
                     "icon": {
