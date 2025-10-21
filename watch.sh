@@ -23,7 +23,11 @@ do
   # 时间格式转换
   readable_time=$(date -d @"$timestamp" +"%Y-%m-%d %H:%M:%S")
 
-  echo "容器事件: $readable_time $action $name $hostname"
+  if [[ "$action" == "exec_start" || "$action" == "exec_die" || "$action" == "exec_create" ]]; then
+    continue
+  fi
+
+  echo "容器事件: $readable_time $action $name $image $hostname"
 
   case "$action" in
     "start")
