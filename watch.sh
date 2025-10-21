@@ -23,7 +23,7 @@ do
   # 时间格式转换
   readable_time=$(date -d @"$timestamp" +"%Y-%m-%d %H:%M:%S")
 
-  if [[ "$action" == "exec_start" || "$action" == "exec_die" || "$action" == "exec_create" ]]; then
+  if [[ "$action" == exec_* ]]; then
     continue
   fi
 
