@@ -4,7 +4,9 @@ ARG ALPINE_VERSION=3.18
 
 FROM alpine:${ALPINE_VERSION}
 
-RUN apk add --no-cache curl jq bash docker-cli
+RUN apk add --no-cache curl jq bash docker-cli tzdata
+
+ENV TZ=Asia/Shanghai
 
 ENV AUTOHEAL_CONTAINER_LABEL=autoheal \
     AUTOHEAL_START_PERIOD=0 \
