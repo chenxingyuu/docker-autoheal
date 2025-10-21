@@ -27,7 +27,7 @@ do
     continue
   fi
 
-  echo "容器事件: $readable_time $action $name $image $hostname"
+  echo "容器事件: $readable_time | $action | $name | $image | $hostname"
 
   case "$action" in
     "start")
